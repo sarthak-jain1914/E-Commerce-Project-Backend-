@@ -10,9 +10,9 @@ import java.util.List;
 
 
 public interface ProductService {
-    Product getProductById(Integer id);
+    Product getProductById(Integer id) throws ProductNotFoundException;
 
-    List<Product> getAllProducts();
+    List<Product> getAllProducts() throws ProductNotFoundException;
 
     List<CategoryIdAndTitle> getAllCategories();
 

@@ -46,7 +46,7 @@ public class ProductController {
 
 
     @GetMapping("/products")
-    public List<Product> getAllProducts() {
+    public List<Product> getAllProducts() throws ProductNotFoundException {
         return Productservice.getAllProducts();
     }
 
@@ -65,22 +65,11 @@ public class ProductController {
 
     @GetMapping("/category/{id}")
     public Category getCategoryById(@PathVariable("id") int id) throws ProductNotFoundException {
-        Category category = Productservice.getCategoryById(id);
-        if(category == null) {
-            throw new ProductNotFoundException("product not found");
-        }
-        return category;
+        return  Productservice.getCategoryById(id);
     }
 
     @GetMapping("/categoryT/{title}")
     public Category getCategoryByTitle(@PathVariable("title") String title) throws ProductNotFoundException {
-        Category response =  Productservice.getCategoryByTitle(title);
-        if(response == null){
-            throw new ProductNotFoundException("product not found");
-        }
-        return response;
+        return Productservice.getCategoryByTitle(title);
     }
-
-
-
 }

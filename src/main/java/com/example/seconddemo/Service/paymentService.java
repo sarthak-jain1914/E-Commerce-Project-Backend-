@@ -8,7 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service("paymentService")
-public class paymentService implements ProductServiceInterface {
+public class paymentService implements PaymentServiceInterface {
 
     @Autowired
     private RazorpayPaymentGateway razorpayPaymentGateway;

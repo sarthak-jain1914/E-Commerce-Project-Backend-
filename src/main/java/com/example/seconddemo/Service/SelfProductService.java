@@ -6,6 +6,7 @@ import com.example.seconddemo.Models.Product;
 import com.example.seconddemo.Repository.CategoryRepo;
 import com.example.seconddemo.Repository.ProductRepo;
 import com.example.seconddemo.Repository.Projection.CategoryIdAndTitle;
+import com.example.seconddemo.exception.CategoryNotFoundException;
 import com.example.seconddemo.exception.ProductNotFoundException;
 import org.springframework.stereotype.Service;
 
@@ -26,18 +27,19 @@ public class SelfProductService implements ProductService {
     }
 
     @Override
-    public Product getProductById(Integer id) {
+    public Product getProductById(Integer id) throws ProductNotFoundException {
         Optional<Product> response = productRepo.findById(id);
         if(response.isEmpty()){
-            throw new IllegalArgumentException("product not found ");
+            throw new ProductNotFoundException("product not found ");
         }
         System.out.println("Fetched product: " + response);
         return response.get();
     }
 
     @Override
-    public List<Product> getAllProducts() {
-        return productRepo.findAll();
+    public List<Product> getAllProducts() throws ProductNotFoundException {
+            return productRepo.findAll();
+
     }
 
     @Override
@@ -48,6 +50,10 @@ public class SelfProductService implements ProductService {
     @Override
     public Product createProduct(String title, String description, String imageURL,
                                  String catTitle) throws ProductNotFoundException {
+
+        validateArguments(title, description, imageURL,
+                 catTitle);
+
 
         Product product = new Product();
         Category category = new Category();
@@ -76,6 +82,22 @@ public class SelfProductService implements ProductService {
 
     }
 
+    public void validateArguments(String title, String description, String imageURL,
+                                    String catTitle){
+        if(title == null || title.isEmpty()){
+            throw new IllegalArgumentException("Title cannot be empty");
+        }
+        if(description == null || description.isEmpty()){
+            throw new IllegalArgumentException("Description cannot be empty");
+        }
+        if(imageURL == null || imageURL.isEmpty()){
+            throw new IllegalArgumentException("Image URL cannot be empty");
+        }
+        if(catTitle == null || catTitle.isEmpty()){
+            throw new IllegalArgumentException("Category Title cannot be empty");
+        }
+    }
+
 
     public  Product updateProduct(Product product) {
         Product existingProduct = productRepo.findById(product.getId()).get();
@@ -96,14 +118,18 @@ public class SelfProductService implements ProductService {
        Optional<Category> response = categoryRepo.findById(id);
        if(response.isEmpty())
        {
-           throw new ProductNotFoundException("category not found");
+           throw new CategoryNotFoundException("category not found");
        }
         return response.get();
     }
 
     @Override
     public Category getCategoryByTitle(String title)  {
-        return categoryRepo.findByTitle(title).orElse(null);
-
+        Optional<Category> response = categoryRepo.findByTitle(title);
+        if(response.isEmpty())
+        {
+            throw new CategoryNotFoundException("category not found");
+        }
+        return response.get();
     }
 }
