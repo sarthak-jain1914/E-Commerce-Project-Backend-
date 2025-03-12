@@ -5,6 +5,7 @@ import com.example.seconddemo.Models.Category;
 import com.example.seconddemo.Models.Product;
 import com.example.seconddemo.Repository.Projection.CategoryIdAndTitle;
 import com.example.seconddemo.exception.ProductNotFoundException;
+import org.springframework.data.domain.Page;
 
 import java.util.List;
 
@@ -23,4 +24,5 @@ public interface ProductService {
 
     Category getCategoryByTitle(String title) throws ProductNotFoundException;
 
+    Page<Product> getPaginatedProducts(int pageNo, int pageSize);
 }

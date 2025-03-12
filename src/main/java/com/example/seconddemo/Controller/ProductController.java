@@ -9,6 +9,9 @@ import com.example.seconddemo.Service.ProductService;
 import com.example.seconddemo.exception.ProductNotFoundException;
 import org.springframework.beans.factory.annotation.Qualifier;
 //import org.springframework.web.bind.annotation.*;
+import org.springframework.cache.annotation.Cacheable;
+import org.springframework.cache.annotation.Caching;
+import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -30,6 +33,7 @@ public class ProductController {
     }
 
     @GetMapping("/product/{id}")
+    @Cacheable(value = "product", key = "#id")
     public Product getProductById(@PathVariable("id") Integer id) throws ProductNotFoundException {
         if(id >= 200) {
             throw new IllegalArgumentException("ID should not be 200");
@@ -46,6 +50,7 @@ public class ProductController {
 
 
     @GetMapping("/products")
+    @Cacheable(value = "products")
     public List<Product> getAllProducts() throws ProductNotFoundException {
         return Productservice.getAllProducts();
     }
@@ -71,5 +76,10 @@ public class ProductController {
     @GetMapping("/categoryT/{title}")
     public Category getCategoryByTitle(@PathVariable("title") String title) throws ProductNotFoundException {
         return Productservice.getCategoryByTitle(title);
+    }
+
+    @GetMapping("/products/{pageNo}/{pageSize}")
+    public Page<Product> getPaginatedProducts(@PathVariable("pageNo") int pageNo, @PathVariable("pageSize") int pageSize) {
+        return Productservice.getPaginatedProducts(pageNo, pageSize);
     }
 }

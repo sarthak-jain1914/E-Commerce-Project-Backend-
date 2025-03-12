@@ -2,20 +2,20 @@ package com.example.seconddemo.Service;
 
 
 
-import com.example.seconddemo.paymentgateway.RazorpayPaymentGateway;
+import com.example.seconddemo.paymentgateways.InterfacePaymentGateway;
 import com.razorpay.RazorpayException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
-@Service("paymentService")
+@Service
 public class paymentService implements PaymentServiceInterface {
-
     @Autowired
-    private RazorpayPaymentGateway razorpayPaymentGateway;
+    private InterfacePaymentGateway paymentGateway;
 
     @Override
     public String initiatePayment(String email, String name , String phoneNumber, String orderId,
-                                  Long amount) throws RazorpayException {
-        return razorpayPaymentGateway.getPaymentGatewayLink(email, name, phoneNumber,orderId, amount);
+                                  Long amount){
+        return paymentGateway.getPaymentGatewayLink(email, name, phoneNumber,orderId, amount);
     }
 }

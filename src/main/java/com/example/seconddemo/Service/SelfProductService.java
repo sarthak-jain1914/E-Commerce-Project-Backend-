@@ -8,6 +8,10 @@ import com.example.seconddemo.Repository.ProductRepo;
 import com.example.seconddemo.Repository.Projection.CategoryIdAndTitle;
 import com.example.seconddemo.exception.CategoryNotFoundException;
 import com.example.seconddemo.exception.ProductNotFoundException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
@@ -131,5 +135,18 @@ public class SelfProductService implements ProductService {
             throw new CategoryNotFoundException("category not found");
         }
         return response.get();
+    }
+
+    @Override
+    public Page<Product> getPaginatedProducts(int pageNo, int pageSize) {
+        Pageable paging = PageRequest.of(pageNo, pageSize);
+
+        String sortBy = "title";
+        Pageable pagingWithSort = PageRequest.of(pageNo, pageSize, Sort.Direction.ASC ,sortBy);
+        Page<Product> pagedResult = productRepo.findAll(pagingWithSort);
+
+//        Page<Product> pagingResult = productRepo.findAll(paging);
+
+        return pagedResult;
     }
 }

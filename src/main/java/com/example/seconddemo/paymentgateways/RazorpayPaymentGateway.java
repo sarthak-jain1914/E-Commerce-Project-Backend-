@@ -1,31 +1,26 @@
-package com.example.seconddemo.paymentgateway;
+package com.example.seconddemo.paymentgateways;
 
 
-import com.example.seconddemo.exception.ProductNotFoundException;
 import com.razorpay.PaymentLink;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import org.json.JSONObject;
-import com.razorpay.Payment;
 import com.razorpay.RazorpayClient;
 import com.razorpay.RazorpayException;
 
 import java.time.LocalDateTime;
 import java.time.ZoneId;
-import java.time.temporal.ChronoUnit;
 
-@Component
-public class RazorpayPaymentGateway {
+@Component("razorpay")
+public class RazorpayPaymentGateway implements InterfacePaymentGateway {
 
-    private final RazorpayClient razorpayClient;
+    @Autowired
+    private RazorpayClient razorpayClient;
 
-    public RazorpayPaymentGateway(RazorpayClient razorpayClient) {
-        this.razorpayClient = razorpayClient;
-    }
-
+    @Override
     public String getPaymentGatewayLink(String email, String name , String phoneNumber,
-                                        String orderId, Long amount) throws RazorpayException {
+                                        String orderId, Long amount) {
         try {
             JSONObject paymentLinkRequest = new JSONObject();
             paymentLinkRequest.put("amount", amount);
@@ -56,7 +51,6 @@ public class RazorpayPaymentGateway {
             paymentLinkRequest.put("notes", notes);
             paymentLinkRequest.put("callback_url", "https://example-callback-url.com/");
             paymentLinkRequest.put("callback_method", "get");
-
             PaymentLink payment = razorpayClient.paymentLink.create(paymentLinkRequest);
             return payment.get("short_url").toString();
         } catch (RazorpayException exception){
