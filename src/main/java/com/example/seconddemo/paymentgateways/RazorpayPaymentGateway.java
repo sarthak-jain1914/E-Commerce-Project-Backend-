@@ -51,6 +51,7 @@ public class RazorpayPaymentGateway implements InterfacePaymentGateway {
             paymentLinkRequest.put("notes", notes);
             paymentLinkRequest.put("callback_url", "https://example-callback-url.com/");
             paymentLinkRequest.put("callback_method", "get");
+
             PaymentLink payment = razorpayClient.paymentLink.create(paymentLinkRequest);
             return payment.get("short_url").toString();
         } catch (RazorpayException exception){

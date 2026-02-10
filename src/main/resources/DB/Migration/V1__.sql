@@ -1,23 +1,24 @@
 CREATE TABLE category
 (
-    id         INT    NOT NULL,
-    created_at datetime NULL,
-    updated_at datetime NULL,
-    is_deleted BIT(1) NOT NULL,
+    id         INT          NOT NULL,
+    created_at datetime     NULL,
+    updated_at datetime     NULL,
+    is_deleted BIT(1)       NOT NULL,
     title      VARCHAR(255) NULL,
     CONSTRAINT pk_category PRIMARY KEY (id)
 );
 
 CREATE TABLE product
 (
-    id            INT    NOT NULL,
-    created_at    datetime NULL,
-    updated_at    datetime NULL,
-    is_deleted    BIT(1) NOT NULL,
-    title         VARCHAR(255) NULL,
-    `description` VARCHAR(255) NULL,
-    imageurl      VARCHAR(255) NULL,
-    category_id   INT NULL,
+    id                   INT          NOT NULL,
+    created_at           datetime     NULL,
+    updated_at           datetime     NULL,
+    is_deleted           BIT(1)       NOT NULL,
+    title                VARCHAR(255) NULL,
+    `description`        VARCHAR(255) NULL,
+    imageurl             VARCHAR(255) NULL,
+    category_id          INT          NULL,
+    created_by_user_name VARCHAR(255) NULL,
     CONSTRAINT pk_product PRIMARY KEY (id)
 );
 
