@@ -11,5 +11,6 @@ public class CreateProductRequestDTO {
     private String description;
     private String imageURL;
     private CategoryRequestDTO category;
+    private String CreatedByUserName;
 
 }

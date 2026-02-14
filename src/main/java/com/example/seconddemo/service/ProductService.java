@@ -3,7 +3,6 @@ package com.example.seconddemo.service;
 import com.example.seconddemo.dto.CreateProductRequestDTO;
 import com.example.seconddemo.models.Category;
 import com.example.seconddemo.models.Product;
-import com.example.seconddemo.repository.Projection.CategoryIdAndTitle;
 import com.example.seconddemo.exception.ProductNotFoundException;
 import org.springframework.data.domain.Page;
 
@@ -24,4 +23,8 @@ public interface ProductService {
     Category getCategoryByTitle(String title) throws ProductNotFoundException;
 
     Page<Product> getPaginatedProducts(int pageNo, int pageSize);
+
+    public  Product updateProduct(Product product);
+
+    void deleteProduct(Integer id);
 }

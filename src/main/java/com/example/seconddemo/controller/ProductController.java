@@ -3,8 +3,6 @@ package com.example.seconddemo.controller;
 import com.example.seconddemo.dto.CreateProductRequestDTO;
 import com.example.seconddemo.models.Category;
 import com.example.seconddemo.models.Product;
-
-import com.example.seconddemo.repository.Projection.CategoryIdAndTitle;
 import com.example.seconddemo.service.ProductService;
 import com.example.seconddemo.exception.ProductNotFoundException;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -61,5 +59,15 @@ public class ProductController {
     @GetMapping("/products/{pageNo}/{pageSize}")
     public Page<Product> getPaginatedProducts(@PathVariable("pageNo") int pageNo, @PathVariable("pageSize") int pageSize) {
         return Productservice.getPaginatedProducts(pageNo, pageSize);
+    }
+
+    @GetMapping("/update-product")
+    public Product updateProduct(@RequestBody Product product) {
+        return Productservice.updateProduct(product);
+    }
+
+    @GetMapping("delete-product/{id}")
+    public void deleteProduct(@PathVariable("id") Integer id) throws ProductNotFoundException {
+        Productservice.deleteProduct(id);
     }
 }
