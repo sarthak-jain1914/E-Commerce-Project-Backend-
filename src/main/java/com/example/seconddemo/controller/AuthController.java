@@ -1,6 +1,7 @@
 package com.example.seconddemo.controller;
 
 import com.example.seconddemo.dto.SignUpDto;
+import com.example.seconddemo.exception.InvalidArgumentException;
 import com.example.seconddemo.exception.ProductNotFoundException;
 import com.example.seconddemo.service.UserServiceInterface;
 import org.springframework.web.bind.annotation.*;
@@ -22,6 +23,7 @@ public class AuthController {
 
     @GetMapping("/signIn")
     public String signIn(@RequestBody SignUpDto signUpDto) throws ProductNotFoundException {
+//        throw new InvalidArgumentException("Invalid email or password");
         return userService.userSignIn(signUpDto.getEmail(), signUpDto.getPassword());
     }
 }

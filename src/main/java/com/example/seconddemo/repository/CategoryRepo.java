@@ -1,7 +1,6 @@
 package com.example.seconddemo.repository;
 
 import com.example.seconddemo.models.Category;
-import com.example.seconddemo.repository.Projection.CategoryIdAndTitle;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;

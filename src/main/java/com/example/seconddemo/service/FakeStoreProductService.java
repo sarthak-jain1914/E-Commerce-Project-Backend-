@@ -4,10 +4,11 @@ package com.example.seconddemo.service;
 import com.example.seconddemo.dto.CategoryRequestDTO;
 import com.example.seconddemo.dto.CreateProductRequestDTO;
 import com.example.seconddemo.dto.FakeStoreProductServiceDTO;
+import com.example.seconddemo.exception.CategoryNotFoundException;
+import com.example.seconddemo.exception.ProductNotFoundException;
 import com.example.seconddemo.models.Category;
 import com.example.seconddemo.models.Product;
 import com.example.seconddemo.repository.CategoryRepo;
-import com.example.seconddemo.repository.Projection.CategoryIdAndTitle;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -147,7 +148,7 @@ public class FakeStoreProductService implements ProductService {
         CategoryRequestDTO response = fakeStoreResponse.getBody();
         //validate response
         if(response == null) {
-            throw new RuntimeException("Category not found");
+            throw new CategoryNotFoundException("Category not found");
         }
         //convert response to category object
 
@@ -163,5 +164,22 @@ public class FakeStoreProductService implements ProductService {
     @Override
     public Page<Product> getPaginatedProducts(int pageNo, int pageSize) {
         return null;
+    }
+
+    /**
+     * @param product
+     * @return
+     */
+    @Override
+    public Product updateProduct(Product product) {
+        return null;
+    }
+
+    /**
+     * @param id
+     */
+    @Override
+    public void deleteProduct(Integer id) {
+
     }
 }

@@ -29,6 +29,7 @@ public class ControllerAdvice {
     public ResponseEntity<ErrorDTO> handleInvalidArgumentException(InvalidArgumentException ex) {
         ErrorDTO errorDTO = new ErrorDTO();
         errorDTO.setErrorMsg(ex.getMessage());
+//        errorDTO.setErrorMsg("INVALID OR EXPIRED TOKEN");
         errorDTO.setErrorCode("402");
         return ResponseEntity.badRequest().body(errorDTO);
     }
